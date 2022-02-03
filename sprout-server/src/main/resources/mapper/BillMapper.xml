@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pjf.server.mapper.BillMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pjf.server.entity.Bill">
+        <id column="id" property="id"/>
+        <result column="money" property="money"/>
+        <result column="create_date" property="createDate"/>
+        <result column="book_id" property="bookId"/>
+        <result column="account_id" property="accountId"/>
+        <result column="types_id" property="typesId"/>
+        <result column="claimed" property="claimed"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="reimbursed" property="reimbursed"/>
+        <result column="remark" property="remark"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, money, create_date, book_id, account_id, types_id, claimed, img_url, reimbursed, remark, user_id
+    </sql>
+    <select id="getAllBills" resultType="com.pjf.server.entity.Bill">
+        select * from sp_bill
+        <where>
+            <if test="year != null and year != ''">
+                year(create_date) = #{year} and
+            </if>
+            <if test="mouth != null and mouth != ''">
+                mouth(create_date)=#{mouth} and
+            </if>
+            book_id=#{tallyBook.id} and user_id = #{tallyBook.userId}
+        </where>
+        order by create_date
+    </select>
+
+</mapper>
