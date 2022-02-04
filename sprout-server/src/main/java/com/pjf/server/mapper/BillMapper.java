@@ -23,4 +23,11 @@ public interface BillMapper extends BaseMapper<Bill> {
      * @return 返回账单列表
      */
     List<Bill> getAllBills(String year, String mouth, TallyBook tallyBook);
+
+    /**
+     * 根据账本Id删除账单
+     * @param bookId 账本Id
+     * @return 返回删除条数
+     */
+    Integer deleteByBookId(Integer bookId);
 }

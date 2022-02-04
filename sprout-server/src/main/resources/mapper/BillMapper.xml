@@ -21,6 +21,11 @@
     <sql id="Base_Column_List">
         id, money, create_date, book_id, account_id, types_id, claimed, img_url, reimbursed, remark, user_id
     </sql>
+    <delete id="deleteByBookId">
+        delete
+        from sp_bill
+        where book_id = #{book_id}
+    </delete>
     <select id="getAllBills" resultType="com.pjf.server.entity.Bill">
         select * from sp_bill
         <where>

@@ -20,4 +20,11 @@ public interface ITallyBookService extends IService<TallyBook> {
      * @return 返回添加结果
      */
     ApiResult addTallyBook(TallyBook tallyBook);
+
+    /**
+     * 根据账本id删除账本，同时删除该账本下所有账单。
+     * @param id 账本ID
+     * @return 返回删除结果
+     */
+    ApiResult deleteTallyBook(Integer id);
 }
