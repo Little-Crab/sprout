@@ -29,7 +29,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
-      /*  List<Menu> menus = menuService.getMenusWithRole();
+       /* List<Menu> menus = menuService.getMenusWithRole();
         for (Menu menu : menus) {
             //判断url与菜单角色是否匹配
             if (antPathMatcher.match(menu.getPath(), requestUrl)) {

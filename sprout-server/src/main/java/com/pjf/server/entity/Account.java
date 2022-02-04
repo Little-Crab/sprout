@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("sp_account")
-@ApiModel(value = "Account对象", description = "")
+@ApiModel(value = "Account对象")
 public class Account implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -53,5 +53,8 @@ public class Account implements Serializable {
     @TableField("user_id")
     private Integer userId;
 
+    @ApiModelProperty("初始余额")
+    @TableField("balance")
+    private BigDecimal balance;
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author pjf
@@ -19,7 +19,8 @@ public interface IBillService extends IService<Bill> {
 
     /**
      * 根据年份，月份查询所有账单
-     * @param year 年
+     *
+     * @param year  年
      * @param mouth 月
      * @return 返回账单列表
      */
@@ -27,8 +28,17 @@ public interface IBillService extends IService<Bill> {
 
     /**
      * 添加账单
+     *
      * @param bill 账单信息
      * @return 返回添加结果
      */
     ApiResult addBill(Bill bill);
+
+    /**
+     * 更新账单，如果钱数改变则更新账户，否则不更新账户
+     *
+     * @param bill 账单信息
+     * @return 返回更新结果
+     */
+    ApiResult updateBill(Bill bill);
 }

@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 /**
  * @author pjf
  * 类名：RestAuthenticationEntryPoint
- * 创建时间: 2021/12/17 14:28.
+ * 创建时间: 2022/2/2 14:28.
  */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {

@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 /**
  * @author pjf
  * 类名：RestfulAccessDeniedHandler 当访问接口是没有权限
- * 创建时间: 2021/12/17 14:35.
+ * 创建时间: 2022/2/2 14:35.
  */
 @Component
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {

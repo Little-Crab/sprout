@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 /**
  * @author pjf
  * 类名：SecurityConfig
- * 创建时间: 2021/12/17 14:05.
+ * 创建时间: 2022/2/2 14:05.
  */
 @Slf4j
 @Configuration

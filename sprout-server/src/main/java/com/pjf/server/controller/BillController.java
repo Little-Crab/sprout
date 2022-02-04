@@ -2,15 +2,14 @@ package com.pjf.server.controller;
 
 
 import com.pjf.server.entity.Bill;
-import com.pjf.server.entity.TallyBook;
 import com.pjf.server.service.IBillService;
 import com.pjf.server.utils.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.beans.Transient;
 import java.util.List;
 
 /**
@@ -34,19 +33,18 @@ public class BillController {
         return billService.getAllBills(year, mouth, tallyBookId);
     }
 
+    @Transactional
     @ApiOperation("添加账单")
     @PostMapping("/")
     public ApiResult addBill(@RequestBody Bill bill) {
         return billService.addBill(bill);
     }
 
+    @Transactional
     @ApiOperation("更新账单")
     @PutMapping("/")
     public ApiResult updateBill(@RequestBody Bill bill) {
-        if (billService.updateById(bill)) {
-            return ApiResult.success("账单更新成功");
-        }
-        return ApiResult.error("账单更新失败");
+        return billService.updateBill(bill);
     }
 
     @ApiOperation("删除账单")
