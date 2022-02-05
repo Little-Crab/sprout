@@ -72,9 +72,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                //请求授权
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                //所有请求必须认证
+                .anyRequest().authenticated()
+
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O o) {
