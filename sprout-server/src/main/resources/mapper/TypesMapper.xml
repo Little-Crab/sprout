@@ -4,16 +4,39 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.pjf.server.entity.Types">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="icon" property="icon" />
-        <result column="type" property="type" />
-        <result column="remark" property="remark" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="icon" property="icon"/>
+        <result column="type" property="type"/>
+        <result column="remark" property="remark"/>
+        <result column="parent_id" property="parentId"/>
     </resultMap>
-
+    <resultMap id="types" type="com.pjf.server.entity.Types" extends="BaseResultMap">
+        <collection property="children" ofType="com.pjf.server.entity.Types">
+            <id column="tId" property="id"/>
+            <result column="tName" property="name"/>
+            <result column="tIcon" property="icon"/>
+            <result column="tType" property="type"/>
+            <result column="tRemark" property="remark"/>
+            <result column="tParentId" property="parentId"/>
+        </collection>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, icon, type, remark
     </sql>
+    <select id="getAllTypesByType" resultMap="types">
+        select t1.*,
+               t2.id        as tId,
+               t2.name      as tName,
+               t2.icon      as tIcon,
+               t2.type      as tType,
+               t2.remark    as tRemark,
+               t2.parent_id as tParentId
+        from sp_types t1,
+             sp_types t2
+        where t2.parent_id = t1.id
+          and t1.type = #{type}
+    </select>
 
 </mapper>

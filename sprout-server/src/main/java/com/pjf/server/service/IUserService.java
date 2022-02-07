@@ -1,10 +1,10 @@
 package com.pjf.server.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pjf.server.entity.Role;
 import com.pjf.server.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.pjf.server.entity.UserLogin;
 import com.pjf.server.utils.ApiResult;
+import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -54,4 +54,24 @@ public interface IUserService extends IService<User> {
      * @return 角色列表
      */
     List<Role> getRoles(Integer id);
+
+    /**
+     * 修改密码
+     *
+     * @param oldPass 老密码
+     * @param pass    新密码
+     * @param userId  用户id
+     * @return 返回修改结果
+     */
+    ApiResult updateUserPassword(String oldPass, String pass, Integer userId);
+
+    /**
+     * 更新用户头像
+     *
+     * @param url            图片地址
+     * @param id             用户id
+     * @param authentication 权限
+     * @return 返回更新结果
+     */
+    ApiResult updateUserUserFace(String url, Integer id, Authentication authentication);
 }

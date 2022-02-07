@@ -1,7 +1,12 @@
 package com.pjf.server.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.pjf.server.entity.Menu;
+import com.pjf.server.entity.MenuRole;
 import com.pjf.server.entity.Role;
+import com.pjf.server.service.IMenuRoleService;
+import com.pjf.server.service.IMenuService;
 import com.pjf.server.service.IRoleService;
 import com.pjf.server.utils.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -27,6 +33,10 @@ import java.util.List;
 public class RoleController {
     @Resource
     private IRoleService roleService;
+    @Resource
+    private IMenuService menuService;
+    @Resource
+    private IMenuRoleService menuRoleService;
 
     @Operation(summary = "获取所有角色")
     @GetMapping("/")
@@ -56,4 +66,22 @@ public class RoleController {
         return ApiResult.error("删除失败");
     }
 
+    @Operation(summary = "根据角色Id查询菜单id")
+    @GetMapping("/mid/{rid}")
+    public List<Integer> getMidByRid(@PathVariable Integer rid) {
+        return menuRoleService.list(new QueryWrapper<MenuRole>().eq("role_id", rid)).
+                stream().map(MenuRole::getMenuId).collect(Collectors.toList());
+    }
+
+    @Operation(summary = "查询所有菜单")
+    @GetMapping("/menus")
+    public List<Menu> getAllMenus() {
+        return menuService.getAllMenus();
+    }
+
+    @Operation(summary = "更新角色菜单")
+    @PutMapping("/")
+    public ApiResult updateMenuRole(Integer rid, Integer[] ids) {
+        return menuRoleService.updateMenuRole(rid, ids);
+    }
 }

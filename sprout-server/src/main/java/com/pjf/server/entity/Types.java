@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -46,6 +47,13 @@ public class Types implements Serializable {
     @Schema(description = "备注")
     @TableField("remark")
     private String remark;
+    @Schema(description = "父id")
+    @TableField("parent_id")
+    private Integer parentId;
+
+    @Schema(description = "子类型")
+    @TableField(exist = false)
+    private List<Types> children;
 
 
 }

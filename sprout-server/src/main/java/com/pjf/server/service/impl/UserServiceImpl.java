@@ -11,6 +11,7 @@ import com.pjf.server.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -131,5 +132,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public List<Role> getRoles(Integer id) {
         return userMapper.getRoles(id);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param oldPass 老密码
+     * @param pass    新密码
+     * @param userId  用户id
+     * @return 返回修改结果
+     */
+    @Override
+    public ApiResult updateUserPassword(String oldPass, String pass, Integer userId) {
+        User admin = userMapper.selectById(userId);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        //判断旧密码是否正确
+        if (encoder.matches(oldPass, admin.getPassword())) {
+            admin.setPassword(encoder.encode(pass));
+            int i = userMapper.updateById(admin);
+            if (1 == i) {
+                return ApiResult.success("更新成功");
+            }
+        }
+        return ApiResult.error("更新失败");
+    }
+
+    @Override
+    public ApiResult updateUserUserFace(String url, Integer id, Authentication authentication) {
+        User user = userMapper.selectById(id);
+        user.setImgUrl(url);
+        int result = userMapper.updateById(user);
+        if (1 == result) {
+            User principal = (User) authentication.getPrincipal();
+            principal.setImgUrl(url);
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user, null, authentication.getAuthorities()));
+            return ApiResult.success("更新成功", url);
+        }
+        return ApiResult.error("更新失败");
     }
 }

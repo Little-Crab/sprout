@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -67,5 +68,8 @@ public class Menu implements Serializable {
     @TableField("enabled")
     private Boolean enabled;
 
+    @Schema(description = "子菜单")
+    @TableField(exist = false)
+    private List<Menu> children;
 
 }

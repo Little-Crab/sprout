@@ -1,11 +1,11 @@
 package com.pjf.server.mapper;
 
-import com.pjf.server.entity.MenuRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.pjf.server.entity.MenuRole;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author pjf
@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 
+    /**
+     * 更新角色菜单
+     *
+     * @param ids 菜单id
+     * @param rid 角色id
+     * @return 更新条数
+     */
+    Integer insertReport(Integer[] ids, Integer rid);
 }
