@@ -1,7 +1,6 @@
 package com.pjf.server.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,12 +13,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode
-@ApiModel(value = "登录实体")
+@Schema(description = "登录实体")
 public class UserLogin {
-    @ApiModelProperty(value = "用户名", required = true)
+    @Schema(description = "用户名", required = true)
     private String username;
-    @ApiModelProperty(value = "密码", required = true)
+    @Schema(description = "密码", required = true)
     private String password;
-    @ApiModelProperty(value = "验证码", required = true)
+    @Schema(description = "验证码", required = true)
     private String code;
 }

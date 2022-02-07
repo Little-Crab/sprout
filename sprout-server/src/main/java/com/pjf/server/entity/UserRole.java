@@ -4,17 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author pjf
@@ -23,20 +22,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("sp_user_role")
-@ApiModel(value = "UserRole对象", description = "")
+@Schema(description = "UserRole对象")
 public class UserRole implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("用户id")
+    @Schema(description = "用户id")
     @TableField("user_id")
     private Integer userId;
 
-    @ApiModelProperty("角色id")
+    @Schema(description = "角色id")
     @TableField("role_id")
     private Integer roleId;
 

@@ -1,20 +1,18 @@
 package com.pjf.server.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pjf.server.entity.Account;
 import com.pjf.server.entity.Bill;
 import com.pjf.server.entity.TallyBook;
 import com.pjf.server.mapper.AccountMapper;
 import com.pjf.server.mapper.BillMapper;
 import com.pjf.server.service.IBillService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pjf.server.utils.ApiResult;
 import com.pjf.server.utils.UserUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -37,15 +35,15 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill> implements IB
      * 根据年份，月份查询所有账单
      *
      * @param year  年
-     * @param mouth 月
+     * @param month 月
      * @return 返回账单列表
      */
     @Override
-    public List<Bill> getAllBills(String year, String mouth, Integer tallyBookId) {
+    public List<Bill> getAllBills(String year, String month, Integer tallyBookId) {
         TallyBook tallyBook = new TallyBook();
         tallyBook.setId(tallyBookId);
         tallyBook.setUserId(UserUtils.getCurrentUser().getId());
-        return billMapper.getAllBills(year, mouth, tallyBook);
+        return billMapper.getAllBills(year, month, tallyBook);
     }
 
     /**

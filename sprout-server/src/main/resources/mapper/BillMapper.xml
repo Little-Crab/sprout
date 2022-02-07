@@ -32,8 +32,8 @@
             <if test="year != null and year != ''">
                 year(create_date) = #{year} and
             </if>
-            <if test="mouth != null and mouth != ''">
-                mouth(create_date)=#{mouth} and
+            <if test="month != null and month != ''">
+                month(create_date)=#{month} and
             </if>
             book_id=#{tallyBook.id} and user_id = #{tallyBook.userId}
         </where>

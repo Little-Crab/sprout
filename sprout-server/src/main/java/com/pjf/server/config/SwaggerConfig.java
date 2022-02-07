@@ -1,18 +1,15 @@
 package com.pjf.server.config;
 
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author pjf
@@ -20,57 +17,27 @@ import java.util.List;
  * 创建时间: 2022/2/2 16:18.
  */
 @Configuration
-@EnableSwagger2
+@OpenAPIDefinition
+@SecurityScheme(
+        name = "Authorization",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "Bearer"
+)
 public class SwaggerConfig {
+
     @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.pjf.server.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .securityContexts(securityContexts())
-                .securitySchemes(securitySchemes());
+    public OpenAPI springShopOpenAPI() {
+
+
+        return new OpenAPI()
+                .info(new Info().title("禾苗")
+                        .description("记账+清单+博客")
+                        .version("v0.0.1")
+                        .license(new License().name("pjf").url("http://localhost:8081/doc.html")))
+                .externalDocs(new ExternalDocumentation()
+                        .description("禾苗纪事参考接口")
+                        .url("https://springshop.wiki.github.org/docs"));
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("禾苗")
-                .description("记账+清单+博客")
-                .contact(new Contact("pjf", "http://localhost:8081/doc.html", "pjf0311@gmail.com"))
-                .version("1.0")
-                .build();
-    }
-
-    private List<SecurityScheme> securitySchemes() {
-        List<SecurityScheme> result = new ArrayList<>();
-        ApiKey apiKey = new ApiKey("Authorization", "Authorization", "Header");
-        result.add(apiKey);
-        return result;
-    }
-
-    private List<SecurityContext> securityContexts() {
-        //需要认证的路径
-        List<SecurityContext> result = new ArrayList<>();
-
-        result.add(getContextByPath("/hello/.*"));
-        return result;
-    }
-
-    private SecurityContext getContextByPath(String path) {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex(path))
-                .build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        List<SecurityReference> result = new ArrayList<>();
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        result.add(new SecurityReference("Authorization", authorizationScopes));
-        return result;
-    }
 }

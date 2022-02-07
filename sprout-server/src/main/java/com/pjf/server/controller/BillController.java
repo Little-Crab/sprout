@@ -4,8 +4,9 @@ package com.pjf.server.controller;
 import com.pjf.server.entity.Bill;
 import com.pjf.server.service.IBillService;
 import com.pjf.server.utils.ApiResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +22,34 @@ import java.util.List;
  * @since 2022-02-02 12:38:14
  */
 @RestController
-@Api(tags = "账单管理")
-@RequestMapping("/bill")
+@Tag(name = "账单管理")
+@RequestMapping("/keep/bill")
+@SecurityRequirement(name = "Authorization")
 public class BillController {
     @Resource
     public IBillService billService;
 
-    @ApiOperation("获取所有账单")
+    @Operation(summary = "获取所有账单")
     @GetMapping("/")
-    public List<Bill> getAllBills(String year, String mouth, Integer tallyBookId) {
-        return billService.getAllBills(year, mouth, tallyBookId);
+    public List<Bill> getAllBills(String year, String month, Integer tallyBookId) {
+        return billService.getAllBills(year, month, tallyBookId);
     }
 
     @Transactional
-    @ApiOperation("添加账单")
+    @Operation(summary = "添加账单")
     @PostMapping("/")
     public ApiResult addBill(@RequestBody Bill bill) {
         return billService.addBill(bill);
     }
 
     @Transactional
-    @ApiOperation("更新账单")
+    @Operation(summary = "更新账单")
     @PutMapping("/")
     public ApiResult updateBill(@RequestBody Bill bill) {
         return billService.updateBill(bill);
     }
 
-    @ApiOperation("删除账单")
+    @Operation(summary = "删除账单")
     @DeleteMapping("/{id}")
     public ApiResult deleteBill(@PathVariable Integer id) {
         if (billService.removeById(id)) {

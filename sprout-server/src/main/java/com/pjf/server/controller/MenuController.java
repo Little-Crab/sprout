@@ -1,9 +1,8 @@
 package com.pjf.server.controller;
 
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-02-02 12:38:14
  */
 @RestController
-@Api(tags = "菜单管理")
+@Tag(name = "菜单管理")
 @RequestMapping("/menu")
 public class MenuController {
 

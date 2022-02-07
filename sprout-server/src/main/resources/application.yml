@@ -2,6 +2,8 @@
 server:
   port: 8080
 spring:
+  main:
+    allow-circular-references: true
   datasource:
     #用户名
     username: root
@@ -73,3 +75,23 @@ jwt:
   expiration: 604800
   # JWT 负载中拿到开头
   tokenHead: Bearer
+
+springdoc:
+  api-docs:
+    #是否开启文档功能
+    enabled: true
+    #swagger后端请求地址
+    path: /v3/api-docs
+    resolve-schema-properties: false
+  swagger-ui:
+    #自定义swagger前端请求路径，输入http：127.0.0.1:8080/test会自动重定向到swagger页面
+    path: /test
+  #包扫描路径
+  packages-to-scan: com.pjf.server.controller,com.pjf.server.entity
+  #这里定义了两个分组，可定义多个，也可以不定义
+  group-configs:
+    #分组名
+    - group: sprout
+      #按路径匹配
+      packages-to-scan: com.pjf.server.controller,com.pjf.server.entity
+

@@ -1,8 +1,6 @@
 package com.pjf.server.config;
 
 import com.pjf.server.config.security.*;
-import com.pjf.server.entity.User;
-import com.pjf.server.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -38,8 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomFilter customFilter;
     @Resource
     private CustomUrlDecisionManager urlDecisionManager;
-    @Resource
-    private IUserService userService;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/doc.html",
                 "/webjars/**",
                 "/swagger-resources/**",
-                "/v2/api-docs/**",
+                "/v3/api-docs/**",
                 "/captcha",
                 "/ws/**",
                 "/*"
@@ -92,22 +88,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //添加授权拦截器
         http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未登录或授权返回
-        http.exceptionHandling().
-                accessDeniedHandler(restfulAccessDeniedHandler)
+        http.exceptionHandling()
+                .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return username -> {
-            User user = userService.getAdminByUserName(username);
-            if (null != user) {
-                user.setRoles(userService.getRoles(user.getId()));
-                return user;
-            }
-            throw new UsernameNotFoundException("用户名或密码不正确!!!");
-        };
+        return new MyUserDetailsService();
     }
 
     @Bean

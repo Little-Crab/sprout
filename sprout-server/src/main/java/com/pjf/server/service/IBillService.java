@@ -1,8 +1,7 @@
 package com.pjf.server.service;
 
-import com.pjf.server.entity.Bill;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.pjf.server.entity.TallyBook;
+import com.pjf.server.entity.Bill;
 import com.pjf.server.utils.ApiResult;
 
 import java.util.List;
@@ -21,10 +20,10 @@ public interface IBillService extends IService<Bill> {
      * 根据年份，月份查询所有账单
      *
      * @param year  年
-     * @param mouth 月
+     * @param month 月
      * @return 返回账单列表
      */
-    List<Bill> getAllBills(String year, String mouth, Integer tallyBookId);
+    List<Bill> getAllBills(String year, String month, Integer tallyBookId);
 
     /**
      * 添加账单

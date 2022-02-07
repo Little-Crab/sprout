@@ -4,17 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author pjf
@@ -23,20 +22,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("sp_menu_role")
-@ApiModel(value = "MenuRole对象", description = "")
+@Schema(description = "MenuRole对象")
 public class MenuRole implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("菜单id")
+    @Schema(description = "菜单id")
     @TableField("menu_id")
     private Integer menuId;
 
-    @ApiModelProperty("角色Id")
+    @Schema(description = "角色Id")
     @TableField("role_id")
     private Integer roleId;
 
