@@ -1,4 +1,4 @@
-package com.pjf.server.config.security;
+package com.pjf.server.config.security.filter;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,7 +13,7 @@ import java.util.Collection;
 
 /**
  * @author pjf
- * 类名：CustomUrlDecisionManager 判断用户角色
+ * 类名：CustomUrlDecisionManager 判断用户角色 访问决策管理器
  * 创建时间: 2022/2/2 16:18.
  */
 @Component

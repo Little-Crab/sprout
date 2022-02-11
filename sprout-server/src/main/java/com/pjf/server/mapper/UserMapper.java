@@ -1,8 +1,8 @@
 package com.pjf.server.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pjf.server.entity.Role;
 import com.pjf.server.entity.User;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
 
@@ -23,4 +23,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 角色列表
      */
     List<Role> getRoles(Integer id);
+
+    /**
+     * 获取用户列表
+     *
+     * @return 返回用户列表
+     */
+    List<User> getAllUsers();
 }

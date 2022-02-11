@@ -45,7 +45,7 @@ public interface IUserService extends IService<User> {
      * @param username 账号
      * @return 返回用户信息
      */
-    User getAdminByUserName(String username);
+    User getUserByUserName(String username);
 
     /**
      * 根据用户ID获取角色列表
@@ -74,4 +74,29 @@ public interface IUserService extends IService<User> {
      * @return 返回更新结果
      */
     ApiResult updateUserUserFace(String url, Integer id, Authentication authentication);
+
+    /**
+     * 获取用户列表
+     *
+     * @return 返回用户列表
+     */
+    List<User> getAllUsers();
+
+    /**
+     * 根据手机号查询用户信息
+     *
+     * @param phone 手机号
+     * @return 返回用户信息
+     */
+    User getUserByPhone(String phone);
+
+    /**
+     * 手机号登录
+     *
+     * @param phone   手机号
+     * @param code    验证码
+     * @param request request
+     * @return 返回Token
+     */
+    ApiResult loginPhone(String phone, String code, HttpServletRequest request);
 }

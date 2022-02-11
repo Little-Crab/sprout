@@ -20,7 +20,13 @@
         <result column="birthday" property="birthday"/>
         <result column="create_date" property="createDate"/>
     </resultMap>
-
+    <resultMap id="UserWithRole" type="com.pjf.server.entity.User" extends="BaseResultMap">
+        <collection property="roles" ofType="com.pjf.server.entity.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, gender, nickname, username, password, img_url, phone, address, notion_id, email, enabled, id_card, birthday, create_date
@@ -30,6 +36,15 @@
         from sp_role as role
                  left join sp_user_role as sur on role.id = sur.id
         where sur.id = #{id}
+    </select>
+    <select id="getAllUsers" resultMap="UserWithRole">
+        select distinct a.*, r.id as rid, r.name as rname, r.name_zh as rnameZh
+        from sp_user a
+                 left join
+             sp_user_role ar on a.id = ar.user_id
+                 left join
+             sp_role r on r.id = ar.role_id
+        order by a.id
     </select>
 
 </mapper>

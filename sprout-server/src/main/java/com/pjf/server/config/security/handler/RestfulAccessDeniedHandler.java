@@ -1,4 +1,4 @@
-package com.pjf.server.config.security;
+package com.pjf.server.config.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjf.server.utils.ApiResult;

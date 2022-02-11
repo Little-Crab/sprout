@@ -2,6 +2,8 @@ package com.pjf.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pjf.server.config.security.auth.PhoneAuthenticationToken;
+import com.pjf.server.config.security.details.PhoneUserDetailService;
 import com.pjf.server.entity.Role;
 import com.pjf.server.entity.User;
 import com.pjf.server.mapper.UserMapper;
@@ -10,6 +12,7 @@ import com.pjf.server.utils.ApiResult;
 import com.pjf.server.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,6 +51,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private JwtTokenUtil jwtTokenUtil;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+    @Resource
+    private PhoneUserDetailService pUserDetailService;
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 登录
@@ -117,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return 返回用户信息
      */
     @Override
-    public User getAdminByUserName(String username) {
+    public User getUserByUserName(String username) {
 
         return userMapper.selectOne(new QueryWrapper<User>().eq("username", username).eq("enabled", true));
 
@@ -169,5 +176,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return ApiResult.success("更新成功", url);
         }
         return ApiResult.error("更新失败");
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @return 返回用户列表
+     */
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.getAllUsers();
+    }
+
+    /**
+     * 根据手机号查询用户信息
+     *
+     * @param phone 手机号
+     * @return 返回用户信息
+     */
+    @Override
+    public User getUserByPhone(String phone) {
+        return userMapper.selectOne(new QueryWrapper<User>().eq("phone", phone));
+    }
+
+    @Override
+    public ApiResult loginPhone(String phone, String code, HttpServletRequest request) {
+        String captcha = redisTemplate.opsForValue().get(phone);
+        if (!code.equals(captcha)) {
+            return ApiResult.error("登录失败，验证码错误");
+        }
+        UserDetails userDetails = pUserDetailService.loadUserByUsername(phone);
+        //判断是否被禁用（封号）
+        if (!userDetails.isEnabled()) {
+            return ApiResult.error("该账号已被禁用，请联系管理员！");
+        }
+        //创建用户名密码身份验证令牌
+        PhoneAuthenticationToken phoneToken = new PhoneAuthenticationToken(userDetails.getAuthorities(), phone, code);
+        //设置用户登录
+        SecurityContextHolder.getContext().setAuthentication(phoneToken);
+        //根据用户名密码生成Token
+        String token = jwtTokenUtil.generateToken(userDetails);
+        //要返回前端的数据 用户信息
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return ApiResult.success("登录成功", tokenMap);
     }
 }

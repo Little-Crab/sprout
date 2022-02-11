@@ -6,6 +6,7 @@ import com.pjf.server.service.IUserService;
 import com.pjf.server.utils.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * 登录控制
  **/
 @Tag(name = "登录控制")
+@CrossOrigin
 @RestController
 public class LoginController {
     @Resource
@@ -30,9 +32,15 @@ public class LoginController {
         return userService.login(userLogin.getUsername(), userLogin.getPassword(), userLogin.getCode(), request);
     }
 
+    @Operation(summary = "手机号登录")
+    @PostMapping("/login/phone")
+    public ApiResult loginPhone(@RequestBody UserLogin userLogin, HttpServletRequest request) {
+        return userService.loginPhone(userLogin.getPhone(), userLogin.getCode(), request);
+    }
+
     @Operation(summary = "注册")
     @PostMapping("/register")
-    public ApiResult register(@RequestBody User user,String code) {
-        return userService.register(user,code);
+    public ApiResult register(@RequestBody User user, String code) {
+        return userService.register(user, code);
     }
 }

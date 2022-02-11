@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @Tag(name = "角色管理")
 @SecurityRequirement(name = "Authorization")
-@RequestMapping("/role")
+@RequestMapping("/system/basic/premise")
 public class RoleController {
     @Resource
     private IRoleService roleService;
@@ -45,7 +45,7 @@ public class RoleController {
     }
 
     @Operation(summary = "添加角色")
-    @PostMapping("/")
+    @PostMapping("/role")
     public ApiResult addRole(@RequestBody Role role) {
         String ROLE = "ROLE_";
         if (!role.getName().startsWith(ROLE)) {
@@ -58,7 +58,7 @@ public class RoleController {
     }
 
     @Operation(summary = "删除角色")
-    @DeleteMapping("/{rid}")
+    @DeleteMapping("/role/{rid}")
     public ApiResult deleteRole(@PathVariable Integer rid) {
         if (roleService.removeById(rid)) {
             return ApiResult.success("删除成功");

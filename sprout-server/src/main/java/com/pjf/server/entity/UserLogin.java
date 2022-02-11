@@ -15,10 +15,14 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @Schema(description = "登录实体")
 public class UserLogin {
-    @Schema(description = "用户名", required = true)
+    @Schema(description = "用户名")
     private String username;
-    @Schema(description = "密码", required = true)
+    @Schema(description = "密码")
     private String password;
-    @Schema(description = "验证码", required = true)
+    @Schema(description = "手机号")
+    private String phone;
+    @Schema(description = "验证码")
     private String code;
+    @Schema(description = "记住我")
+    private Boolean rememberMe;
 }

@@ -1,4 +1,4 @@
-package com.pjf.server.config.security;
+package com.pjf.server.config.security.filter;
 
 import com.pjf.server.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Value;
