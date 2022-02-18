@@ -76,10 +76,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
-                "/login",
-                "/login/phone",
-                "/register",
-                "/logout",
+                "/sprout/login",
+                "/sprout/login/phone",
+                "/sprout/register",
+                "/sprout/logout",
                 "/css/**",
                 "/js/**",
                 "/index",
@@ -88,8 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/swagger-resources/**",
                 "/v3/api-docs/**",
-                "/captcha",
-                "/captcha/**",
+                "/sprout/captcha",
+                "/sprout/captcha/**",
                 "/ws/**",
                 "/*"
         );
@@ -112,7 +112,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         o.setSecurityMetadataSource(customFilter);
                         return o;
                     }
-                }).and()
+                })
+                .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository()) // 配置 token 持久化仓库
                 .tokenValiditySeconds(3600) // remember 过期时间，单为秒
@@ -132,7 +133,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
+    protected AuthenticationManager authenticationManager() {
         ProviderManager providerManager = new ProviderManager(List.of(phoneAuthenticationProvider));
         providerManager.setEraseCredentialsAfterAuthentication(false);
         return providerManager;

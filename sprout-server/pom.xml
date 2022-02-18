@@ -109,6 +109,17 @@
             <artifactId>spring-boot-starter-redis</artifactId>
             <version>1.4.7.RELEASE</version>
         </dependency>
+        <!--        API流量控制-->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-core</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-inmemory</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "民族管理")
-@RequestMapping("/nations")
+@RequestMapping("/sprout/nations")
 @SecurityRequirement(name = "Authorization")
 public class NationController {
     @Resource

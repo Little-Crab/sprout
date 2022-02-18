@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "菜单管理")
-@RequestMapping("/menu")
+@RequestMapping("/sprout/menu")
 @SecurityRequirement(name = "Authorization")
 public class MenuController {
     @Resource

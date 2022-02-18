@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author pjf
@@ -30,4 +30,16 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 返回用户列表
      */
     List<User> getAllUsers();
+
+    /**
+     * 更新用户账户是否锁定
+     *
+     * @param id 用户id
+     * @param b  是否锁定
+     * @return 返回更新结果
+     */
+    int updateLock(Integer id, boolean b);
+
+
+    int updateEnabled(Integer id, boolean b);
 }

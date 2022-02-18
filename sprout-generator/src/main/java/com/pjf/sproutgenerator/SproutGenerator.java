@@ -9,27 +9,27 @@ import java.util.Collections;
 public class SproutGenerator {
 
     public static void main(String[] args) {
-        FastAutoGenerator.create("jdbc:mysql://127.0.0.1/sprout?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT%2B8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true", "root", "123456")
+        FastAutoGenerator.create("jdbc:mysql://127.0.0.1/excel_import?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT%2B8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true", "root", "123456")
                 .globalConfig(builder -> {
                     builder.author("pjf") // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .fileOverride() // 覆盖已生成文件
                             .commentDate("yyyy-MM-dd HH:mm:ss")
-                            .outputDir("D://"); // 指定输出目录
+                            .outputDir("D:\\excel"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.pjf.server") // 设置父包名
-//                            .mapper("mapper")
+                            .mapper("mapper")
                             .entity("entity")
-//                            .service("service")
-//                            .serviceImpl("service.impl")
-//                            .controller("controller")
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D://src//main//resource//mapper")); // 设置mapperXml生成路径
+                            .service("service")
+                            .serviceImpl("service.impl")
+                            .controller("controller")
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D://excel//src//main//resource//mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.
+                    builder
 //                            addInclude("sp_nation")
-                            addInclude("sp_account") // 设置需要生成的表名
+//                            addInclude("sp_account") // 设置需要生成的表名
 //                            .addInclude("sp_bill")
 //                            .addInclude("sp_menu")
 //                            .addInclude("sp_menu_role")
@@ -37,6 +37,8 @@ public class SproutGenerator {
 //                            .addInclude("sp_tally_book")
 //                            .addInclude("sp_types")
 //                            .addInclude("sp_user")
+                            .addInclude("question")
+                            .addInclude("answer")
 //                            .addInclude("sp_user_role")
                             // 设置过滤表前缀
                             .addTablePrefix("sp_", "c_")

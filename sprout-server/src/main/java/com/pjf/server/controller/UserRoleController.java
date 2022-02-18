@@ -2,7 +2,6 @@ package com.pjf.server.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-02-02 12:38:14
  */
 @RestController
-@RequestMapping("/user-role")
+@RequestMapping("/sprout/user-role")
 public class UserRoleController {
 
 }

@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @Tag(name = "角色管理")
 @SecurityRequirement(name = "Authorization")
-@RequestMapping("/system/basic/premise")
+@RequestMapping("/sprout/system/basic/premise")
 public class RoleController {
     @Resource
     private IRoleService roleService;

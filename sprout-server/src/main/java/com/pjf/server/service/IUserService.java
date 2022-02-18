@@ -6,7 +6,6 @@ import com.pjf.server.entity.User;
 import com.pjf.server.utils.ApiResult;
 import org.springframework.security.core.Authentication;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,25 +18,7 @@ import java.util.List;
  */
 public interface IUserService extends IService<User> {
 
-    /**
-     * 登录
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param code     验证码
-     * @param request  客户端请求
-     * @return 返回登录结果以及token
-     */
-    ApiResult login(String username, String password, String code, HttpServletRequest request);
 
-    /**
-     * 注册
-     *
-     * @param user 注册信息
-     * @param code 验证码
-     * @return 返回注册结果
-     */
-    ApiResult register(User user, String code);
 
     /**
      * 根据账号获取用户信息
@@ -90,13 +71,22 @@ public interface IUserService extends IService<User> {
      */
     User getUserByPhone(String phone);
 
+
     /**
-     * 手机号登录
+     * 更新用户状态
      *
-     * @param phone   手机号
-     * @param code    验证码
-     * @param request request
-     * @return 返回Token
+     * @param id 用户id
+     * @param b  解除锁定
+     * @return 返回解除锁定结果
      */
-    ApiResult loginPhone(String phone, String code, HttpServletRequest request);
+    boolean updateLock(Integer id, boolean b);
+
+    /**
+     * 更新启用状态
+     *
+     * @param id 用户Id
+     * @param b  是否启用
+     * @return 返回启用结果
+     */
+    boolean updateEnabled(Integer id, boolean b);
 }

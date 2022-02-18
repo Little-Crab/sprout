@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "账单管理")
-@RequestMapping("/keep/bill")
+@RequestMapping("/sprout/keep/bill")
 @SecurityRequirement(name = "Authorization")
 public class BillController {
     @Resource

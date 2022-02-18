@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "账本管理")
-@RequestMapping("/keep/tally")
+@RequestMapping("/sprout/keep/tally")
 @SecurityRequirement(name = "Authorization")
 public class TallyBookController {
     @Resource

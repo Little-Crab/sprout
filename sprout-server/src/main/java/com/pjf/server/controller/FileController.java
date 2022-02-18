@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @SecurityRequirement(name = "Authorization")
 public class FileController {
     @Operation(summary = "图片上传")
-    @PostMapping("/upload")
+    @PostMapping("/sprout/upload")
     public ApiResult imageUpload(@RequestPart("file") MultipartFile file) {
         try {
             String[] flePath = FastDFSUtils.upload(file);

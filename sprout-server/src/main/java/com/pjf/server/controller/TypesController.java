@@ -22,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "类型管理", description = "账单类型，账本类型，账户类型，分别存储了不同的图标和描述")
-@RequestMapping("/system/keep/types")
+@RequestMapping("/sprout/system/keep/types")
 @SecurityRequirement(name = "Authorization")
 public class TypesController {
     @Resource

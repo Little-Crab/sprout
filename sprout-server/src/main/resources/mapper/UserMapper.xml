@@ -19,6 +19,8 @@
         <result column="id_card" property="idCard"/>
         <result column="birthday" property="birthday"/>
         <result column="create_date" property="createDate"/>
+        <result column="accountNonLocked" property="accountNonLocked"/>
+
     </resultMap>
     <resultMap id="UserWithRole" type="com.pjf.server.entity.User" extends="BaseResultMap">
         <collection property="roles" ofType="com.pjf.server.entity.Role">
@@ -29,8 +31,19 @@
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, gender, nickname, username, password, img_url, phone, address, notion_id, email, enabled, id_card, birthday, create_date
+        id, name, gender, nickname, username, password, img_url, phone, address, notion_id, email, enabled, id_card, birthday, create_date, accountNonLocked
     </sql>
+    <update id="updateLock">
+        update sp_user
+        set accountNonLocked = #{b}
+        where id = #{id}
+          and enabled = true
+    </update>
+    <update id="updateEnabled">
+        update sp_user
+        set enabled = #{b}
+        where id = #{id}
+    </update>
     <select id="getRoles" resultType="com.pjf.server.entity.Role">
         select role.id, role.name, role.name_zh
         from sp_role as role

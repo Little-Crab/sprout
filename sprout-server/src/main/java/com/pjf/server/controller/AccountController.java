@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "账户管理")
-@RequestMapping("/keep/account")
+@RequestMapping("/sprout/keep/account")
 @SecurityRequirement(name = "Authorization")
 public class AccountController {
     @Resource

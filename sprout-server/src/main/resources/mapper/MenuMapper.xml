@@ -48,25 +48,27 @@
         id, url, path, component, name, icon_cls, keep_alive, require_auth, parent_id, enabled
     </sql>
     <select id="getMenusByUserId" resultMap="Menus">
-        select m1.*,
-               m2.id           as id2,
-               m2.url          as url2,
-               m2.path         as path2,
-               m2.component    as component2,
-               m2.name         as name2,
-               m2.icon_cls     as iconCls2,
-               m2.keep_alive   as keepAlive2,
-               m2.require_auth as requireAuth2,
-               m2.parent_id    as parentId2,
-               m2.enabled      as enabled2
-        from sp_menu m1,
-             sp_menu m2,
-             sp_menu_role mr,
-             sp_user_role ur
-        where m1.id = m2.parent_id
-          and m2.id = mr.menu_id
+        select DISTINCT m1.*,
+                        m2.id           as id2,
+                        m2.url          as url2,
+                        m2.path         as path2,
+                        m2.component    as component2,
+                        m2.name         as name2,
+                        m2.icon_cls     as iconCls2,
+                        m2.keep_alive   as keepAlive2,
+                        m2.require_auth as requireAuth2,
+                        m2.parent_id    as parentId2,
+                        m2.enabled      as enabled2
+        from sp_menu_role mr,
+             sp_user_role ur,
+             sp_menu m1
+                 left join sp_menu m2 on m2.parent_id = m1.id
+        where m1.parent_id = 1
+          and m1.id = mr.menu_id
           and mr.role_id = ur.role_id
           and ur.user_id = #{id}
+          and m1.enabled = true
+        order by m1.id;
     </select>
     <select id="getAllMenus" resultMap="MenusWithChildren">
         select m1.id   as id1,

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -82,6 +83,7 @@ public class User implements Serializable, UserDetails {
 
     @Schema(description = "是否启用，1为true启用，0为未启用")
     @TableField("enabled")
+    @Getter(value = AccessLevel.NONE)
     private Boolean enabled;
 
     @Schema(description = "身份证号")
@@ -100,6 +102,11 @@ public class User implements Serializable, UserDetails {
     @TableField(exist = false)
     private List<Role> roles;
 
+    @Schema(description = "1,为未锁定，0为锁定")
+    @TableField("accountNonLocked")
+    @Getter(value = AccessLevel.NONE)
+    private Boolean accountNonLocked;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.
@@ -114,7 +121,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return accountNonLocked;
     }
 
     @Override

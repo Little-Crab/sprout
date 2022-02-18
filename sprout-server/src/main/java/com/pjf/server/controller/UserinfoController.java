@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 import java.util.Map;
 
 /**
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @Tag(name = "个人中心", description = "主要为用户信息的修改，密码修改，更新头像等")
-@RequestMapping("/user")
+@RequestMapping("/sprout/user")
 @SecurityRequirement(name = "Authorization")
 public class UserinfoController {
     @Resource
@@ -59,5 +60,18 @@ public class UserinfoController {
         String[] flePath = FastDFSUtils.upload(file);
         String url = FastDFSUtils.getTrackerUrl() + flePath[0] + "/" + flePath[1];
         return userService.updateUserUserFace(url, id, authentication);
+    }
+
+    @Operation(summary = "获取当前用户信息")
+    @GetMapping("/info")
+    public User getAdminInfo(Principal principal) {
+        if (null == principal) {
+            return null;
+        }
+        String username = principal.getName();
+        User admin = userService.getUserByUserName(username);
+        admin.setPassword(null);
+        admin.setRoles(userService.getRoles(admin.getId()));
+        return admin;
     }
 }

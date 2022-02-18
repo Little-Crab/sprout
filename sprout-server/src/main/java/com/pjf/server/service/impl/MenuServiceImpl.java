@@ -2,6 +2,7 @@ package com.pjf.server.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pjf.server.entity.Menu;
+import com.pjf.server.entity.User;
 import com.pjf.server.mapper.MenuMapper;
 import com.pjf.server.service.IMenuService;
 import com.pjf.server.utils.UserUtils;
@@ -36,15 +37,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     @Override
     public List<Menu> getMenusByUserId() {
-        Integer adminId = UserUtils.getCurrentUser().getId();
+        User user = UserUtils.getCurrentUser();
+        Integer adminId = user.getId();
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         //从redis获取菜单数据
         @SuppressWarnings("unchecked")
-        List<Menu> menus = (List<Menu>) valueOperations.get("menu_" + adminId);
+        List<Menu> menus = (List<Menu>) valueOperations.get("sprout_menu_" + adminId);
         //如果为空从数据库获取
         if (CollectionUtils.isEmpty(menus)) {
             menus = menuMapper.getMenusByUserId(adminId);
-            valueOperations.set("menu_" + adminId, menus);
+            valueOperations.set("sprout_menu_" + adminId, menus);
         }
         return menus;
     }

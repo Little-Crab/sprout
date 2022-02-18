@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RestController
 @Tag(name = "验证码发送")
-@RequestMapping("/captcha")
+@RequestMapping("/sprout/captcha")
 public class CaptchaController {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
